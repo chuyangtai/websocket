@@ -14,7 +14,7 @@ var server=ws.createServer(function (conn) {
     conn.on('text',function (str) {
         console.log('Receiver'+str);
         //变成大写发送回去
-        broadcast(str,'message')
+        broadcast(conn.nickName+':'+str,'message')
     })
     conn.on('close',function (code,reason) {
         console.log('connection closed');

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat Room</title>
+    <style>
+        .block{
+            border: 1px solid #e1e1e3;
+            border-radius: 2px;
+            background-color: #ececec;
+            margin: 5px 0;
+            max-width: 300px;
+            padding:5px;
+        }
+    </style>
 </head>
 <body>
 <input type="text" id="sendTxt">
@@ -23,6 +33,7 @@
     //showMessage
     function showMessage(str) {
         var div = document.createElement('div');
+        div.className='block'
         div.innerHTML = str;
         document.body.appendChild(div);
     }
