@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+</head>
+<body>
+<input type="text" id="sendTxt">
+<button id="sendBtn">发送</button>
+<div id="recv"></div>
+<script type="text/javascript">
+
+    //这个地址背后就是一个websocket的服务，把发送出去的数据返回给你，在线版
+    var websocket = new WebSocket("ws://localhost:8001");
+    websocket.onopen = function () {
+        console.log('websocket open');
+        document.getElementById('recv').innerHTML = "connected"
+    }
+    websocket.onclose = function () {
+        console.log('websocket close');
+    }
+    //接收到消息回调的函数
+    websocket.onmessage = function (e) {
+        console.log(e.data);
+        document.getElementById('recv').innerHTML = e.data;
+    }
+
+    //发送数据
+    document.getElementById('sendBtn').onclick = function () {
+        var txt = document.getElementById('sendTxt').value;
+        websocket.send(txt);
+    }
+</script>
+</body>
+</html>

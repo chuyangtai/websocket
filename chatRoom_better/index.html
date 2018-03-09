@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Room</title>
+</head>
+<body>
+<input type="text" id="sendTxt">
+<button id="sendBtn">发送</button>
+<div id="recv"></div>
+<script type="text/javascript">
+
+    //这个地址背后就是一个websocket的服务，把发送出去的数据返回给你，在线版
+    var websocket = new WebSocket("ws://localhost:8001");
+    websocket.onopen = function () {
+        console.log('websocket open');
+        document.getElementById('recv').innerHTML = "connected"
+    }
+    websocket.onclose = function () {
+        console.log('websocket close');
+    }
+
+    //showMessage
+    function showMessage(str) {
+        var div = document.createElement('div');
+        div.innerHTML = str;
+        document.body.appendChild(div);
+    }
+
+    //发送数据
+    document.getElementById('sendBtn').onclick = function () {
+        var txt = document.getElementById('sendTxt').value;
+        if (txt) {
+            websocket.send(txt);
+        }
+    }
+    //接收到消息回调的函数
+    websocket.onmessage = function (e) {
+        console.log(e.data);
+        showMessage(e.data);
+    }
+</script>
+</body>
+</html>
